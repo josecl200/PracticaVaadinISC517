@@ -1,0 +1,57 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.3.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+}
+
+group = 'edu.pucmm.josecl200'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
+    maven { url "https://oss.sonatype.org/content/repositories/vaadin-snapshots/" }
+    maven { url "http://maven.vaadin.com/vaadin-addons" }
+}
+
+ext {
+    set('vaadinVersion', "13.0.7")
+}
+
+dependencies {
+    implementation group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.2.Final'
+    implementation group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.3.6.Final'
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.3.6.Final'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.vaadin.addons:numberfield:0.5.1'
+    implementation 'org.vaadin.blackbluegl:calendar-component:2.0-BETA4'
+    implementation 'org.vaadin.onur:calendar-component:1.0.0'
+    implementation 'com.vaadin:vaadin-spring-boot-starter:13.0.7'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'com.h2database:h2'
+    implementation 'com.sendgrid:sendgrid-java:4.0.1'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "com.vaadin:vaadin-bom:${vaadinVersion}"
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
